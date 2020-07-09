@@ -60,6 +60,7 @@ public class Project1IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start date"));
     }
 
+
     /**
      * Test the method with four arguments
      */
@@ -68,6 +69,44 @@ public class Project1IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001");
         assertEquals(Integer.valueOf(1), result.getExitCode());
         assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start time"));
+    }
+
+    /**
+     * Test the method with four arguments
+     */
+    @Test
+    public void testWithFiveArguments(){
+        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001", "12:12");
+        assertEquals(Integer.valueOf(1), result.getExitCode());
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
+    }
+
+    /**
+     * Test the method with four arguments
+     */
+    @Test
+    public void testWithSixArguments(){
+        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001","12:12","12/23/2001");
+        assertEquals(Integer.valueOf(1), result.getExitCode());
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
+    }
+    /**
+     * Test the method with four arguments
+     */
+    @Test
+    public void testWithSevenArguments(){
+        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001");
+        assertEquals(Integer.valueOf(1), result.getExitCode());
+        assertThat(result.getTextWrittenToStandardError(), containsString(" "));
+    }
+    /**
+     * Test the method with four arguments
+     */
+    @Test
+    public void testWithPrintAndSixArguments(){
+        MainMethodResult result = invokeMain("-print","Devyani","888-989-3003","877-989-3003","12/23/2001","12:39","12/12/2001");
+        assertEquals(Integer.valueOf(1), result.getExitCode());
+        assertThat(result.getTextWrittenToStandardError(), containsString(" "));
     }
 
     /**
