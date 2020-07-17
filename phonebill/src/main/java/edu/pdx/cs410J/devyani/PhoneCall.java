@@ -69,7 +69,7 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public Date getStartTime() {
-   SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     /* Create Date object
      * parse the string into date */
     Date startDateTime = null;
@@ -91,7 +91,7 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public Date getEndTime(){
-    SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     /* Create Date object
      * parse the string into date
 */

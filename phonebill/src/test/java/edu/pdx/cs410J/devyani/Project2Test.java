@@ -11,13 +11,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * A unit test for code in the Project1 lass.
  */
-public class Project1Test extends InvokeMainTestCase {
+public class Project2Test extends InvokeMainTestCase {
   /**
-   * Invokes the main method of {@link Project1} with the given arguments.
-   */
-  private MainMethodResult invokeMain(String... args) {
-    return invokeMain( Project1.class, args );
+   * Invokes the main method of {@link Project2} with the given arguments.
+
+ private MainMethodResult invokeMain(String... args) {
+    return invokeMain( Project2.class, args );
   }
+
 
   /**
    * Test the isinvalidPhoneNumber method
@@ -25,7 +26,7 @@ public class Project1Test extends InvokeMainTestCase {
   @Test
   public void testIsvalidPhoneNumberString(){
     String number = "333-333-4444";
-    assertThat(Project1.IsvalidPhoneNumber(number),containsString("333-333-4444"));
+    assertThat(Project2.IsvalidPhoneNumber(number),containsString("333-333-4444"));
 }
 
 
