@@ -8,7 +8,7 @@ public class TextParserTest {
     public void TestToparseTextFile()
     {
         PhoneBill bill;
-        TextParser parser = new TextParser("file");
+        TextParser parser = new TextParser("newTextfile");
         try
         {
             bill = parser.parse();

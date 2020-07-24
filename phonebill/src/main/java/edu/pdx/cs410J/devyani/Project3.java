@@ -1,25 +1,30 @@
 package edu.pdx.cs410J.devyani;
 
+import edu.pdx.cs410J.AbstractPhoneBill;
+
 import edu.pdx.cs410J.ParserException;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The main class for the CS410J Phone Bill Project
  */
-public class Project2 {
+public class Project3 {
 
+    //private static PhoneBill bill;
     public static void main(String args[]) throws ParseException {
         PhoneCall call = new PhoneCall();
         PhoneBill bill = new PhoneBill();
 
-        String fileName = null;
+        String fileName = "";
+        String prettyFile = "";
 
         /**
          * Booleans to print and to read/write text file
@@ -27,6 +32,7 @@ public class Project2 {
         boolean print = false;
         boolean readTextFile = false;
         boolean writeTextFile = false;
+        boolean prettyprint = false;
 
         /**
          * Checks each given argument and calls Readme method, is any of the argument is "-README".
@@ -41,12 +47,17 @@ public class Project2 {
                     System.exit(1);
 
                 case 1:
-                    System.err.println("Missing Caller Number");
-                    System.exit(1);
+                    if(args[0].equals("-pretty") || args[0].equals("-textFile")){
+                        System.err.println("Missing filename");
+                        System.exit(1);
+                    }
+                    else {
+                        System.err.println("Missing Caller Number");
+                        System.exit(1);
+                    }
                     break;
 
                 case 2:
-
                     System.err.println("Missing Callee Number");
                     System.exit(1);
 
@@ -63,132 +74,345 @@ public class Project2 {
                     break;
 
                 case 5:
-                    System.err.println("Missing call end date");
+                    System.err.println("Missing call start AM/PM");
                     System.exit(1);
                     break;
 
                 case 6:
-                    System.err.println("Missing call end time");
+                    System.err.println("Missing call end date");
                     System.exit(1);
                     break;
                 case 7:
+                    System.err.println("Missing call end time");
+                    System.exit(1);
+                    break;
+
+                case 8:
+                    System.err.println("Missing call end AM/PM");
+                    System.exit(1);
+                    break;
+
+                case 9:
                     if (args[0].equals("-print")) {
+                            System.err.println("Missing call end AM/PM");
+                            System.exit(1);
+                    }
+                    else if (args[0].equals("-textFile")) {
                         System.err.println("Missing call end time");
                         System.exit(1);
-                    } else if (args[0].equals("-textFile")) {
-                        System.err.println("Missing call end date");
+                    }
+                    else if (args[0].equals("-pretty")) {
+                        System.err.println("Missing call end time");
                         System.exit(1);
                     }
+
                     break;
-                case 8:
-                    if (args[0].equals("-textFile")) {
-                        if (args[2].equals("-print")) {
-                            System.err.println("Missing call end date");
+                case 10:
+                    if(args[0].equals("-pretty") || args[0].equals("-textFile")){
+                        System.out.println("Missing call end AM/PM");
+                        System.exit(1);
+                    }
+                    else if(args[0].equals("-print")){
+                        print = true;
+                    }
+                    else{
+                        System.err.println("please enter valid arguments");
+                    }
+
+                    break;
+
+                case 11:
+                    if ((args[0].equals("-print") && args[1].equals("-textFile")) || (args[0].equals("-print") && args[1].equals("-pretty")) ||
+                            (args[0].equals("-pretty") && args[2].equals("-print"))) {
+                        System.err.println("Missing call end AM/PM");
+                        System.exit(1);
+                    }
+                    else if(args[0].equals("-pretty") && args[2].equals("-textFile")){
+                        System.out.println("Missing call end time");
+                        System.exit(1);
+                    }
+                    else if(args[0].equals("-textFile")) {
+                        if(args[2].equals("-print")){
+                            System.err.println("Missing call end AM/PM");
                             System.exit(1);
-                        } else {
-                            System.err.println("Missing call end time");
+                        }
+                        else if (args[2].equals("-pretty")) {
+                            System.out.println("Missing call end time");
                             System.exit(1);
+                        }
+                        else {
+                            readTextFile = true;
+                            writeTextFile = true;
+                        }
+                    }
+
+                    else if (args[0].equals("-pretty")) {
+                        print = true;
+                        prettyFile = args[1];
                         }
 
-                    } else if (args[0].equals("-print")) {
-                        if (args[1].equals("-textFile")) {
-                            System.err.println("Missing call end date");
-                            System.exit(1);
-                        } else {
-                            print = true;
-                            //i = 1;
-                        }
-                    } else {
+                    else {
                         System.err.println("please enter valid arguments");
                         System.exit(1);
                     }
                     break;
-                case 9:
-                    if (args[0].equals("-print") && args[1].equals("-textFile")) {
-                        System.err.println("Missing call end time");
+
+                case 12:
+                    if((args[0].equals("-pretty") && args[2].equals("-textFile")) || (args[2].equals("-pretty") && args[0].equals("-textFile")) ) {
+                        if(args[4].equals("-print")){
+                            System.out.println("Missing call end time");
+                            System.exit(1);
+                        }
+                        else {
+                            System.out.println("Missing call end AM/PM");
+                            System.exit(1);
+                        }
+                    }
+
+                    else if(args[0].equals("-pretty")){
+                        if (args[2].equals("-print") && !args[3].equals("-textFile")){
+                            print = true;
+                        }
+                        else{
+                            System.out.println("please enter valid arguments");
+                            System.exit(1);
+                        }
+                    }
+                    else if(args[0].equals("-textFile")){
+                        if (args[2].equals("-print") && !args[3].equals("-pretty")) {
+                            print = true;
+                            readTextFile = true;
+                            writeTextFile = true;
+
+                        }
+
+                        else{
+                            System.err.println("please enter valid arguments");
+                            System.exit(1);
+                        }
+                    }
+                    else if(args[0].equals("-print") && args[1].equals("-textFile")){
+                        if(!args[3].equals("-pretty")){
+                            readTextFile = true;
+                            writeTextFile = true;
+                            print = true;
+
+                        }
+                        else {
+                            System.out.println("Missing call end time");
+                            System.exit(1);
+                        }
+
+                    }
+                    else if(args[0].equals("-print") && args[1].equals("-pretty")){
+                        if(!args[3].equals("-textFile")){
+                            prettyFile = args[2];
+                            print = true;
+
+                        }
+                        else {
+                            System.out.println("Missing call end time");
+                            System.exit(1);
+                        }
+
+                    }
+
+                    else{
+                        System.err.println("please enter valid arguments");
                         System.exit(1);
-                    } else if (args[0].equals("-textFile") && args[2].equals("-print")) {
-                        System.err.println("Missing call end time");
-                        System.exit(1);
-                    } else if (args[0].equals("-textFile")) {
+                    }
+                    break;
+
+                case 13:
+                    if(args[0].equals("-pretty") && args[2].equals("-textFile")) {
                         readTextFile = true;
                         writeTextFile = true;
-                        fileName = args[1];
-                    } else {
+                        print = true;
+                    }
+                    else if(args[2].equals("-pretty") && args[0].equals("-textFile")){
+                        readTextFile = true;
+                        writeTextFile = true;
+                        print = true;
+                    }
+                    else{
                         System.err.println("please enter valid arguments");
                         System.exit(1);
                     }
                     break;
-                default:
-                    if (args[0].equals("-print") || args[2].equals("-print")) {
-                        if (args[0].equals("-textFile") || args[1].equals("-textFile")) {
-                            if (args.length == 10) {
-                                print = true;
-                                readTextFile = true;
-                                writeTextFile = true;
 
-                            } else if (args.length > 10) {
-                                System.err.println("Too many arguments, please enter valid arguments");
-                                System.exit(1);
-                            }
-                        }
-                    } else if (args[0].equals("-textFile")) {
-                        if (!args[2].equals("-print")) {
-                            if (args.length > 9) {
-                                System.err.println("Too many arguments, please enter valid arguments");
-                                System.exit(1);
-                            }
-                        }
-                    } else if (args.length > 7) {
+                default:
+                    if(args.length > 14){
                         System.err.println("Too many arguments, please enter valid arguments");
                         System.exit(1);
                     }
-            }
+                    else if(args.length == 14){
+                        if(!args[0].equals("-print") && !args[1].equals("-print") && !args[2].equals("-print")
+                        && !args[3].equals("-print") && !args[4].equals("-print")){
+                            System.err.println("Too many arguments, please enter valid arguments");
+                            System.exit(1);
+                        }
+                        else if(args[0].equals("-print") || args[1].equals("-print") || args[2].equals("-print")
+                                || args[3].equals("-print") || args[4].equals("-print")) {
+                            if (!args[0].equals("-pretty") && !args[1].equals("-pretty") && !args[2].equals("-pretty")
+                                    && !args[3].equals("-pretty")) {
+                                System.err.println("Too many arguments, please enter valid arguments");
+                                System.exit(1);
+                            }
+                            else if (!args[0].equals("-textFile") && !args[1].equals("-textFile") && !args[2].equals("-textFile")
+                                    && !args[3].equals("-textFile")) {
+                                System.err.println("Too many arguments, please enter valid arguments");
+                                System.exit(1);
+                            }
+                            else{
+                                print = true;
+                                writeTextFile = true;
+                                readTextFile = true;
+                            }
+                        }
+                        else {
+                            System.err.println("please enter valid arguments");
+                            System.exit(1);
+                        }
 
+
+                    }
+
+
+        }
         }
         /**
          * Checks for the position of -print and -textFile and set the value of variable i accordingly
          */
 
-        int i = 0;
-        if (args[0].equals("-print") && !args[1].equals("-textFile")) {
+       int i = 0;
+        if (args[0].equals("-print") && (!args[1].equals("-textFile") && !args[3].equals("-textFile")) &&
+                (!args[1].equals("-pretty") && !args[3].equals("-pretty"))) {
             i = 1;
-        } else if (args[0].equals("-print") && args[1].equals("-textFile")) {
-            fileName = args[2];
-            i = 3;
-        } else if (args[0].equals("-textFile") && args[2].equals("-print")) {
-            fileName = args[1];
-            i = 3;
-        } else if (args[0].equals("-textFile")) {
-            fileName = args[1];
-            i = 2;
         }
+        else if (args[0].equals("-print") && args[1].equals("-textFile")){
+            fileName = args[2];
+            if(args[3].equals("-pretty")){
+                prettyFile = args[4];
+                i = 5;
+            }
+            else{
+               i =3;
+            }
+        }
+        else if (args[0].equals("-print") && args[1].equals("-pretty")){
+            prettyFile = args[2];
+            if(args[3].equals("-textFile")){
+                fileName = args[4];
+                i =5;
+            }
+            else {
+                i =3;
+            }
+        }
+        else if(args[0].equals("-pretty")){
+            prettyFile = args[1];
+            if(args[2].equals("-textFile")){
+                fileName = args[3];
+                if(args[4].equals("-print")){
+                    i =5;
+                }
+                else {
+                    i =4;
+                }
+            }
+            else if (args[2].equals("-print")){
+                if(args[3].equals("-textFile")){
+                    fileName = args[4];
+                    i =5;
+                }
+                else {
+                    i =3;
+                }
+            }
+            else {
+                i = 2;
+            }
+        }
+        else if(args[0].equals("-textFile")){
+            fileName = args[1];
+            if(args[2].equals("-pretty")) {
+                prettyFile = args[3];
+                if (args[4].equals("-print")) {
+                    i = 5;
+                } else {
+                    i = 4;
+                }
+            }
+            else if (args[2].equals("-print")){
+                if(args[3].equals("-pretty")){
+                    prettyFile = args[4];
+                    i =5;
+                }
+                else {
+                    i =3;
+                }
+            }
+            else {
+                i = 2;
+            }
+
+        }
+
         /**
          * get all the values of the arguments
          */
-        bill.setCustomerName(args[i]);
+
+        bill = new PhoneBill(args[i]);
         bill.customer = bill.getCustomer();
         call.callerNumber = IsvalidPhoneNumber(args[i + 1]);
         call.calleeNumber = IsvalidPhoneNumber(args[i + 2]);
-        call.start = IsvalidTime(args[i + 3] + " " + args[i + 4]);
-        call.end = IsvalidTime(args[i + 5] + " " + args[i + 6]);
+        call.start = IsvalidTime(args[i + 3] + " " + args[i + 4]+ " "+ args[i+5]);
+        call.end = IsvalidTime(args[i + 6] + " " + args[i + 7]+ " "+ args[i+8]);
+
+        bill.addPhoneCall(call);
+
+        if (writeTextFile == true || readTextFile == true) {
+            //System.out.println(call);
+            GotoTextFile(call, bill, fileName);
+        }
+
+
+        if (!prettyFile.equals(""))
+        {
+            if (prettyFile.equals("-"))
+            {
+                print = true;
+            }
+            else
+            {
+               PrettyPrinter printer = new PrettyPrinter(prettyFile);
+               try
+                {
+                    printer.dump(bill);
+
+                }
+                catch (IOException e)
+                {
+                    System.out.println(e);
+                }
+            }
+        }
 
         /**
          * if print is true, output the call details
          */
         if (print) {
-            bill.addPhoneCall(call);
-            System.out.println(call.toString());
+            if(prettyFile.equals("-")){
+                System.out.println("Hello!! Below are the phone call details for Customer: " + bill.getCustomer());
+                System.out.println(call.toString());
+                long callDuration = call.getEndTime().getTime() - call.getStartTime().getTime();
+                System.out.println("Call Duration: " + TimeUnit.MILLISECONDS.toMinutes(callDuration) + " minutes\n");
+            }
+            else {
+                System.out.println(call.toString());
+            }
         }
 
-        /**
-         * call the method to read/write textfile
-         */
-        if (writeTextFile == true || readTextFile == true) {
-            bill.addPhoneCall(call);
-            GotoTextFile(call, bill, fileName);
-            System.exit(0);
-        }
     }
 
     /**
@@ -198,16 +422,43 @@ public class Project2 {
      * @param bill     bill containing several call details
      * @param fileName name of the file passed as argument
      */
-    private static void GotoTextFile(PhoneCall call, PhoneBill bill, String fileName) {
+      private static void GotoTextFile(PhoneCall call, PhoneBill bill, String fileName) {
         try {
             File file = new File(fileName);
             if (file.exists()) {
+                {
+                    try
+                    {
+                        String inputCustomerName = bill.getCustomer();
+                        TextParser tp = new TextParser(fileName);
+                        PhoneBill bill2 = tp.parse();
+                        if (bill2.getCustomer() == null)
+                        {
+                            bill2.setCustomerName(inputCustomerName);
+                        }
+                        else
+                        {
+                            if (!bill2.getCustomer().equals(inputCustomerName))
+                            {
+                                System.out.println("Customer names do not match! Exiting Program");
+                                System.exit(1);
+                            }
+                        }
+                    }
+                    catch (ParserException p)
+                    {
+                        System.out.println(p);
+                    }
+                }
                 TextParser parser = new TextParser(fileName);
-                bill = (PhoneBill) parser.parse();
-                bill.addPhoneCall(call);
+                //parser.parse();
+                AbstractPhoneBill parseBill = parser.parse();
+              // parseBill.addPhoneCall(call);
+               //System.out.println(parseBill);
                 TextDumper dumper = new TextDumper(fileName);
                 dumper.dump(bill);
-            } else {
+            }
+            else {
                 TextDumper dumper = new TextDumper(fileName);
                 dumper.dump(bill);
                 TextParser parser = new TextParser(fileName);
@@ -225,10 +476,12 @@ public class Project2 {
      * @param datetime The String which needs to be validated.
      * @return The validated String.
      */
-    public static String IsvalidTime(String datetime) throws ParseException {
+   public static String IsvalidTime(String datetime) throws ParseException {
         String date = null;
         /* Create Date object
-         * parse the string into date*/
+         * parse the string into date
+
+         */
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm");
             Date depdate = sdf.parse(datetime);
@@ -243,13 +496,12 @@ public class Project2 {
         return date;
     }
 
-
     /**
      * This method checks the String of Phone Number entered by command line.
      *
      * @return The validated String.
      **/
-    public static String IsvalidPhoneNumber(String number) {
+   public static String IsvalidPhoneNumber(String number) {
         if (!number.matches("\\d{3}-\\d{3}-\\d{4}")) {
             System.err.println("Please enter a valid phone number");
             System.exit(1);

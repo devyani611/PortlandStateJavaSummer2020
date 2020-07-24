@@ -47,10 +47,13 @@ public class TextParser implements PhoneBillParser {
                     String CustomerName = PhoneBillInfo[0];
                     CallerNumber = PhoneBillInfo[1];
                     CalleeNumber = PhoneBillInfo[2];
+                    //System.out.println(PhoneBillInfo[3]);
                     String[] startDateTime = PhoneBillInfo[3].split(" ");
                     start = startDateTime[0]+ " "+ startDateTime[1];
                     String[] endDateTime = PhoneBillInfo[4].split(" ");
-                    end = endDateTime[0]+ " "+endDateTime[1];
+                    //System.out.println(PhoneBillInfo[4]);
+                   // System.out.println(endDateTime[0]+ " "+endDateTime[1]+ " "+endDateTime[2]);
+                    end = endDateTime[0]+ " "+endDateTime[1]+ " "+endDateTime[2];
 
                     bill.setCustomerName(CustomerName);
 

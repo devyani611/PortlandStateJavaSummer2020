@@ -5,6 +5,7 @@ import edu.pdx.cs410J.AbstractPhoneCall;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Class to generate phoneBill for a customer, inherited from Abstract class
@@ -19,12 +20,20 @@ public class PhoneBill extends AbstractPhoneBill {
 
     /**
      * Constructor to generate new arrayList to store phonecalls
-     */
 
+*/
     public PhoneBill() {
         this.customer = null;
         this.phonecalls = new ArrayList<>();
 
+    }
+    /**
+     * Creates a new <code>PhoneBill</code> object using only the customers name.
+     *
+     * @param customer The name of the customer that the list of phone calls belongs to.
+     */
+    public PhoneBill(String customer) {
+        this.customer = customer;
     }
 
     /**
@@ -52,18 +61,31 @@ public class PhoneBill extends AbstractPhoneBill {
      */
     @Override
     public void addPhoneCall(AbstractPhoneCall abstractPhoneCall) {
+        if (phonecalls == null) {
+            phonecalls = new ArrayList<>();
+        }
         phonecalls.add((PhoneCall) abstractPhoneCall);
 
     }
-
+    /**
+     * Overrides <code>AbstractPhoneBill</code>'s abstract method <code>getPhoneCalls</code> to return the sorted list of
+     * phone calls.
+     *
+     * @return The list of phone calls as a ArrayList.
+     */
+    @Override
+    public ArrayList<PhoneCall> getPhoneCalls() {
+        Collections.sort(phonecalls);
+        return phonecalls;
+    }
 
     /**
      *  This method returns a Collection of PhoneCalls contained in the PhoneBill object
      *  @return a Collection of PhoneCall objects
-     */
+
     @Override
     public Collection getPhoneCalls() {
 
         return phonecalls;
-    }
+    }*/
 }

@@ -11,7 +11,7 @@ import java.util.Date;
  * This class inherits the existing AbstractPhoneCall class and its methods.
  */
 
-public class PhoneCall extends AbstractPhoneCall {
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
   /**
    * Declare variables to store details of a phonecall
    */
@@ -94,7 +94,7 @@ public class PhoneCall extends AbstractPhoneCall {
     DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     /* Create Date object
      * parse the string into date
-*/
+     */
     Date endDateTime = null;
     try
     {
@@ -130,6 +130,21 @@ public class PhoneCall extends AbstractPhoneCall {
     Date date = getEndTime();
     end = df.format(date);
     return end;
+  }
+
+  /**
+   *
+   * @param pc
+   * @return
+   */
+  @Override
+  public int compareTo(PhoneCall pc) {
+    int value1 = this.getCaller().compareTo(pc.getCaller());
+    if (value1 == 0) {
+      int value2 = pc.getStartTimeString().compareTo(this.getStartTimeString());
+      return value2;
+    }
+    return value1;
   }
 
 }

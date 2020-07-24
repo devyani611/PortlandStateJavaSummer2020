@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.devyani;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -10,343 +9,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests the functionality in the {@link Project2} main class.
+ * Tests the functionality in the {@link Project3} main class.
  */
-public class Project2IT extends InvokeMainTestCase {
+public class Project3IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project2} with the given arguments.
+     * Invokes the main method of {@link Project3} with the given arguments.
      */
     private MainMethodResult invokeMain(String... args) {
 
-        return invokeMain( Project2.class, args );
+        return invokeMain( Project3.class, args );
+    }
+    @Test
+    public void testNoCommandLineArguments() {
+        MainMethodResult result = invokeMain();
+        assertEquals(new Integer(1), result.getExitCode());
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
     }
 
     @Test
-    public void testforOnlytextFile(){
-        MainMethodResult result = invokeMain("-textFile");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Caller Number"));
+    public void testReadMe(){
+        MainMethodResult result = invokeMain("-README");
+        assertEquals(new Integer(0), result.getExitCode());
 
     }
-@Test
-public void TestWithMoreArguments(){
-    MainMethodResult result = invokeMain("devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:50","Rome","Dave","123");
-    assertThat(result.getExitCode(), equalTo(1));
-    assertThat(result.getTextWrittenToStandardError(), containsString("Too many arguments, please enter valid arguments"));
-}
-
-
-    /**
-     *
-     */
     @Test
-    public void testwithtextFileandfiveArguments(){
-        MainMethodResult result = invokeMain("-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
-
+    public void testWithOnlyPrint(){
+        MainMethodResult result = invokeMain("-print");
+        assertEquals(new Integer(1), result.getExitCode());
     }
-    /**
-     *
-     */
-    @Test
-    public void testwithtextFileandsixArguments(){
-        MainMethodResult result = invokeMain("-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void testwithtextFileWithPrintandFiveArguments(){
-        MainMethodResult result = invokeMain("-textFile","phonebill","-print","devyani","989-000-9999","989-109-6789","12/15/2001","12:39");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void testwithPrintandTextFileandFiveArguments(){
-        MainMethodResult result = invokeMain("-print","-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void testwithPrintandTextFileandSixArguments(){
-        MainMethodResult result = invokeMain("-print","-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void testwithTextFileandPrintWithSixArguments(){
-        MainMethodResult result = invokeMain("-textFile","phonebill","-print","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void InvalidargumentsWithoutTextFileAndprint(){
-        MainMethodResult result = invokeMain("phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:39");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("please enter valid arguments"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void InvalidargumentsWithoutTextFileCommand(){
-        MainMethodResult result = invokeMain("-print","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:39");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("please enter valid arguments"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void ExtraArgumentsWithTextFileandPrint(){
-        MainMethodResult result = invokeMain("-print","-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:39","fred");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Too many arguments, please enter valid arguments"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void ExtraArgumentsWithTextFileandWithoutPrint(){
-        MainMethodResult result = invokeMain("-textFile","phonebill","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:39","fred");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Too many arguments, please enter valid arguments"));
-
-    }
-
-    /**
-     *
-     */
-    @Test
-    public void testWithvalidargumentsandPrint(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:45");
-        assertThat(result.getTextWrittenToStandardOut(), containsString("Phone call from 989-000-9999 to 989-109-6789 from 12/15/2001 12:39 PM to 12/15/2001 12:45 PM"));
-
-    }
-    /**
-     *
-     */
-    @Test
-    public void testWithvalidargumentsWithoutPrint(){
-        MainMethodResult result = invokeMain("devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/15/2001","12:45");
-        assertThat(result.getTextWrittenToStandardOut(), containsString(""));
-
-    }
-
-
-    /**
-   * Tests that invoking the main method with no arguments issues an error
-   */
-  @Test
-  public void testNoCommandLineArguments() {
-    MainMethodResult result = invokeMain();
-    assertThat(result.getExitCode(), equalTo(1));
-    assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
-  }
-
-    /**
-     * Test the method with just one argument
-     */
-    @Test
-    public void TestWithOneArgument(){
-        MainMethodResult result = invokeMain("Devyani");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Caller Number"));
-    }
-
-    /**
-     * Test the method with two arguments
-     */
-    @Test
-    public void testWithTwoArguments(){
-        MainMethodResult result = invokeMain("devyani","888-989-3003");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Callee Number"));
-    }
-
-    /**
-     * Test the method with three arguments
-     */
-    @Test
-    public void testWiththreeArguments(){
-        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start date"));
-    }
-
-
-    /**
-     * Test the method with four arguments
-     */
-    @Test
-    public void testWithFourArguments(){
-        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start time"));
-    }
-
-    /**
-     * Test the method with four arguments
-     */
-    @Test
-    public void testWithFiveArguments(){
-        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001", "12:12");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
-    }
-
-    /**
-     * Test the method with four arguments
-     */
-    @Test
-    public void testWithSixArguments(){
-        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001","12:12","12/23/2001");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
-    }
-    /**
-     * Test the method with four arguments
-     */
-    @Test
-    public void testWithSevenArguments(){
-        MainMethodResult result = invokeMain("Devyani","888-989-3003","877-989-3003","12/23/2001");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString(" "));
-    }
-    /**
-     * Test the method with four arguments
-     */
-    @Test
-    public void testWithPrintAndSixArguments(){
-        MainMethodResult result = invokeMain("-print","Devyani","888-989-3003","877-989-3003","12/23/2001","12:39","12/12/2001");
-        assertEquals(Integer.valueOf(1), result.getExitCode());
-        assertThat(result.getTextWrittenToStandardError(), containsString(" "));
-    }
-
-    /**
-     * Test the method for invalid callee number
-     */
-    @Test
-    public void testforInvalidCalleeNumber(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","123456","12/15/2001","12:39","12/12/2001","12:45");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter a valid phone number"));
-    }
-    /**
-     * Test the method for invalid callee number
-     */
-    @Test
-    public void testforInvalidCalleeNumberWithoutPrint(){
-        MainMethodResult result = invokeMain("devyani","989-000-9999","123456","12/15/2001","12:39","12/12/2001","12:45");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter a valid phone number"));
-    }
-    /**
-     * Test the method for invalid callee number
-     */
-    @Test
-    public void testforInvalidCallerNumberWithoutPrint(){
-        MainMethodResult result = invokeMain("devyani","123456","989-000-9999","12/15/2001","12:39","12/12/2001","12:45");
-        assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter a valid phone number"));
-    }
-
-    /**
-     * Test the method for invalid start time
-     */
-    @Test
-    public void testforInvalidStartTime(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","989-109-6789","12/15/2001","jane","12/12/2001","12:45");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-    /**
-     * Test the method for invalid start time
-     */
-    @Test
-    public void testforInvalidStartTimeWithoutPrint(){
-        MainMethodResult result = invokeMain("devyani","989-000-9999","989-109-6789","12/15/2001","jane","12/12/2001","12:45");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-
-    /**
-     * Test the method for invalid end time.
-     */
-    @Test
-    public void testforInvalidEndTime(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/12/2001","jane");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-    /**
-     * Test the method for invalid end time.
-     */
-    @Test
-    public void testforInvalidEndTimeWithoutPrint(){
-        MainMethodResult result = invokeMain("devyani","989-000-9999","989-109-6789","12/15/2001","12:39","12/12/2001","jane");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-
-    /**
-     * Test the method for invalid start date.
-     */
-    @Test
-    public void testforInvalidStartDate(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","989-109-6789","1234","12:39","12/12/2001","12:45");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-
-    /**
-     * Test the method for invalid end date.
-     */
-    @Test
-    public void testforInvalidEndDate(){
-        MainMethodResult result = invokeMain("-print","devyani","989-000-9999","989-109-6789","12/15/20","12:39","2001/12/31","jane");
-        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
-    }
-
-    /**
-     * Test the method with "-README" argument
-     */
-    @Test
-    public void testWithTextFileandReadMeArgument() {
-        MainMethodResult result = invokeMain("-README","-textFile");
-        String expected = "This is project1: Designing a phoneBill application \n" +
-                "The project is designed by Devyani Shrivastava at Portland State University \n" +
-                "The project basically designs a phonebill for an individual. It consists of three files: " +
-                "PhoneBill.java, PhoneCall.java and Project1.java.\n" +
-                "PhoneBill.java file maintains Customer name and PhoneCall.java file has CallerNumber, Callee Number," +
-                "Call startdate and time and Call enddate and time. \n" +
-                "Project1.java file passes the arguments through command line parsing.";
-        assertThat(result.getTextWrittenToStandardOut(), containsString(expected));
-    }
-
-
-    /**
-     * Test the method with "-README" argument
-     */
     @Test
     public void testWithOnlyReadMeArgument() {
         MainMethodResult result = invokeMain("-README");
@@ -359,12 +50,13 @@ public void TestWithMoreArguments(){
                 "Project1.java file passes the arguments through command line parsing.";
         assertThat(result.getTextWrittenToStandardOut(), containsString(expected));
     }
+
     /**
      * Test the method with "-README" alongwith other arguments
      */
     @Test
     public void testWithReadMeOptionWithOtherArguments() {
-        MainMethodResult result = invokeMain("-README","-print","devyani","989-000-9999","989-109-6789","12/15/20","12:39","2001/12/31","12:45");
+        MainMethodResult result = invokeMain("-README","-print","devyani","989-000-9999","989-109-6789","12/15/20","12:39","AM","2001/12/31","12:45","AM");
         String expected = "This is project1: Designing a phoneBill application \n" +
                 "The project is designed by Devyani Shrivastava at Portland State University \n" +
                 "The project basically designs a phonebill for an individual. It consists of three files: " +
@@ -375,4 +67,285 @@ public void TestWithMoreArguments(){
         assertThat(result.getTextWrittenToStandardOut(), containsString(expected));
     }
 
+    @Test
+    public void testWithoutTextFile(){
+        MainMethodResult result = invokeMain("-textFile");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing filename"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testPrettyWithoutFile(){
+        MainMethodResult result = invokeMain("-pretty");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing filename"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testPrettyAndPrintWork(){
+        MainMethodResult result = invokeMain("-pretty","-print");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Callee Number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithPrettyAndFileName(){
+        MainMethodResult result = invokeMain("-pretty","abc");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Callee Number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithPrettyAndDash(){
+        MainMethodResult result = invokeMain("-pretty","-");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Callee Number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+    @Test
+    public void testPrettyWithFileNameAndAllArguments(){
+        MainMethodResult result = invokeMain("-pretty","abc","devyani","099-000-0000","000-000-0000","01/01/2015","01:01","pm","01/01/2015","01:05","pm");
+        assertThat(result.getTextWrittenToStandardOut(), containsString(""));
+    }
+
+    @Test
+    public void testPrettyWithFileNameAndLessArguments(){
+        MainMethodResult result = invokeMain("-pretty","abc","devyani","099-000-0000","000-000-0000","01/01/1010","01:01","am");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testPrettyWithDashAndAllArguments(){
+        MainMethodResult result = invokeMain("-pretty","-","devyani","099-000-0000","000-000-0000","01/01/1010","01:01","am","11/11/1999","10:10","pm");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testPrettyWithDashAndExtraArgumentExitWithError(){
+        MainMethodResult result = invokeMain("-pretty","-","devyani","099-000-0000","000-000-0000","01/01/1010","01:01","am","11/11/1999","10:10","pm","fred","john");
+        assertThat(result.getTextWrittenToStandardError(), containsString("please enter valid arguments"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+    @Test
+    public void testBothPrintAndReadMeWorks(){
+        MainMethodResult result = invokeMain("-print","-README");
+        assertEquals(new Integer(0), result.getExitCode());
+    }
+
+    @Test
+    public void testWithCustomerName(){
+        MainMethodResult result = invokeMain("devyani");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Caller Number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithTwoArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Callee Number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithThreeArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start date"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+
+    @Test
+    public void testWithFourArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing Call start time"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithFiveArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001","12:15");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call start AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithSixArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001","12:15","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end date"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithSevenArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001","12:15","AM","12/12/2001");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end time"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithEightArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001","12:15","AM","12/12/2001","12:16");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithNineArguments(){
+        MainMethodResult result = invokeMain("devyani","222-222-2222","111-111-1111","12/12/2001","12:15","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+        //assertEquals(new Integer(0), result.getExitCode());
+    }
+
+
+    @Test
+    public void testWithInvalidCallerNumber(){
+        MainMethodResult result = invokeMain("devyani","222-222-22cc","111-111-1111","12/12/2001","12:15","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter a valid phone number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithInvalidCalleeNumber(){
+        MainMethodResult result = invokeMain("devyani","222-222-2211","111-111-11bn","12/12/2001","12:15","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter a valid phone number"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+
+    @Test
+    public void testWithInvalidCallStartDate(){
+        MainMethodResult result = invokeMain("devyani","222-222-2211","111-111-1111","12/12/cc","12:15","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithInvalidCallStartTime(){
+        MainMethodResult result = invokeMain("devyani","222-222-2211","111-111-1111","12/12/2001","12:cd","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithInvalidCallEndDate(){
+        MainMethodResult result = invokeMain("devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/20cd","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithInvalidCallEndTime(){
+        MainMethodResult result = invokeMain("devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:cd","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Please enter the date and time in the given format: mm/dd/yyyy HH:mm"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithPrintAndNineArguments(){
+        MainMethodResult result = invokeMain("-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithtextFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-textFile","abc","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithtextFilePrintAndNineArguments(){
+        MainMethodResult result = invokeMain("-textFile","abc","-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithPrinttextFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-print","-textFile","abc","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithtextFileprettyFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-textFile","abc","-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithprettyFiletextFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","-textFile","abc","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithprettyFiletextFilePrintAndNineArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","-textFile","abc","-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithPrintprettyFiletextFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-print","-pretty","test","-textFile","abc","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithprettyFilePrinttextFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","-print","-textFile","abc","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithPrinttextFileprettyFileAndNineArguments(){
+        MainMethodResult result = invokeMain("-print","-textFile","abc","-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+    }
+
+    @Test
+    public void testWithPrettyFileandEightArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
+       // assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithPrettyFilePrintandEightArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
+        // assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithPrintPrettyFileandEightArguments(){
+        MainMethodResult result = invokeMain("-print","-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
+        // assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithtextFileandEightArguments(){
+        MainMethodResult result = invokeMain("-textFile","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
+       // assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithprintandEightArguments(){
+        MainMethodResult result = invokeMain("-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
+        assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+        assertEquals(new Integer(1), result.getExitCode());
+    }
+
+    @Test
+    public void testWithprintprettyandNineArguments(){
+        MainMethodResult result = invokeMain("-print","-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+        //assertEquals(new Integer(0), result.getExitCode());
+    }
+
+    @Test
+    public void testWithprettyprintandNineArguments(){
+        MainMethodResult result = invokeMain("-pretty","test","-print","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16","AM");
+        assertThat(result.getTextWrittenToStandardError(), containsString(""));
+        //assertEquals(new Integer(0), result.getExitCode());
+    }
 }

@@ -11,9 +11,9 @@ public class TextDumperTest {
     {
         PhoneBill bill = new PhoneBill();
         bill.setCustomerName("devyani");
-        PhoneCall call = new PhoneCall("222-555-5555", "888-666-6666", "12/12/2001 12:00", "12/12/2001 12:11");
+        PhoneCall call = new PhoneCall("222-555-5555", "888-666-6666", "12/12/2001 12:00 AM", "12/12/2001 12:11 PM");
         bill.addPhoneCall(call);
-        TextDumper dumper = new TextDumper("file");
+        TextDumper dumper = new TextDumper("newTextfile");
         try
         {
             dumper.dump(bill);
@@ -22,6 +22,8 @@ public class TextDumperTest {
         {
             System.out.println(i);
         }
+
+
     }
 
 }
