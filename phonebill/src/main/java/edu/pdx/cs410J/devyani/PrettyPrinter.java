@@ -50,12 +50,12 @@ public class PrettyPrinter implements PhoneBillDumper {
 
 
         if (bill == null) {
-            System.out.println("No Phonebill found..!!");
+            System.err.println("No Phonebill found..!!");
             System.exit(1);
         } else {
             String customerName = bill.getCustomer();
             if (customerName == null || customerName.equals("")) {
-                System.out.println("Invalid Customer name!");
+                System.err.println("Invalid Customer name!");
             }
             else {
                 //writer.write("")

@@ -109,7 +109,7 @@ public class Project3 {
                     break;
                 case 10:
                     if(args[0].equals("-pretty") || args[0].equals("-textFile")){
-                        System.out.println("Missing call end AM/PM");
+                        System.err.println("Missing call end AM/PM");
                         System.exit(1);
                     }
                     else if(args[0].equals("-print")){
@@ -128,7 +128,7 @@ public class Project3 {
                         System.exit(1);
                     }
                     else if(args[0].equals("-pretty") && args[2].equals("-textFile")){
-                        System.out.println("Missing call end time");
+                        System.err.println("Missing call end time");
                         System.exit(1);
                     }
                     else if(args[0].equals("-textFile")) {
@@ -137,7 +137,7 @@ public class Project3 {
                             System.exit(1);
                         }
                         else if (args[2].equals("-pretty")) {
-                            System.out.println("Missing call end time");
+                            System.err.println("Missing call end time");
                             System.exit(1);
                         }
                         else {
@@ -160,11 +160,11 @@ public class Project3 {
                 case 12:
                     if((args[0].equals("-pretty") && args[2].equals("-textFile")) || (args[2].equals("-pretty") && args[0].equals("-textFile")) ) {
                         if(args[4].equals("-print")){
-                            System.out.println("Missing call end time");
+                            System.err.println("Missing call end time");
                             System.exit(1);
                         }
                         else {
-                            System.out.println("Missing call end AM/PM");
+                            System.err.println("Missing call end AM/PM");
                             System.exit(1);
                         }
                     }
@@ -174,7 +174,7 @@ public class Project3 {
                             print = true;
                         }
                         else{
-                            System.out.println("please enter valid arguments");
+                            System.err.println("please enter valid arguments");
                             System.exit(1);
                         }
                     }
@@ -199,7 +199,7 @@ public class Project3 {
 
                         }
                         else {
-                            System.out.println("Missing call end time");
+                            System.err.println("Missing call end time");
                             System.exit(1);
                         }
 
@@ -211,7 +211,7 @@ public class Project3 {
 
                         }
                         else {
-                            System.out.println("Missing call end time");
+                            System.err.println("Missing call end time");
                             System.exit(1);
                         }
 
@@ -393,7 +393,7 @@ public class Project3 {
                 }
                 catch (IOException e)
                 {
-                    System.out.println(e);
+                    System.err.println(e);
                 }
             }
         }
@@ -440,7 +440,7 @@ public class Project3 {
                         {
                             if (!bill2.getCustomer().equals(inputCustomerName))
                             {
-                                System.out.println("Customer names do not match! Exiting Program");
+                                System.err.println("Customer names do not match! Exiting Program");
                                 System.exit(1);
                             }
                         }

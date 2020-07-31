@@ -303,7 +303,7 @@ public class Project3IT extends InvokeMainTestCase {
     @Test
     public void testWithPrettyFileandEightArguments(){
         MainMethodResult result = invokeMain("-pretty","test","devyani","222-222-2211","111-111-1111","12/12/2001","12:12","AM","12/12/2001","12:16");
-       // assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
+       assertThat(result.getTextWrittenToStandardError(), containsString("Missing call end AM/PM"));
         assertEquals(new Integer(1), result.getExitCode());
     }
 
