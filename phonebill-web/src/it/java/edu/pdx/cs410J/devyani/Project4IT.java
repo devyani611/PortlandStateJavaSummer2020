@@ -16,7 +16,8 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Tests the {@link Project4} class by invoking its main method with various arguments
  */
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Project4IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
@@ -56,7 +57,7 @@ public class Project4IT extends InvokeMainTestCase {
 
     @Test
     public void test3AddPhoneBill() {
-        MainMethodResult result = invokeMain( Project4.class, "-host", HOSTNAME,"-port", PORT,"devyani","111-111-1111","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
+        MainMethodResult result = invokeMain( Project4.class, "-host", HOSTNAME,"-port", PORT,"devyani","111-111-1111","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM" );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
         String out = result.getTextWrittenToStandardOut();
         assertThat(out, out, containsString(""));
@@ -68,6 +69,14 @@ public class Project4IT extends InvokeMainTestCase {
         //result = invokeMain( Project4.class, HOSTNAME, PORT );
         //out = result.getTextWrittenToStandardOut();
         //assertThat(out, out, containsString(Messages.formatDictionaryEntry(word, definition)));
+    }
+
+    @Test
+    public void test4SearchWithCustomerNameStartDateTimeMeridianEndDateTimeMeridian() {
+        MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME,"-port", PORT,"-search","devyani","12/12/2001","12:12","AM","12/12/2001","12:15","AM");
+        assertThat(result.getTextWrittenToStandardOut(), result.getExitCode(), equalTo(0));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString(""));
     }
 
     @Test
@@ -286,14 +295,14 @@ public class Project4IT extends InvokeMainTestCase {
         assertThat(out, out, containsString(""));
     }
 
-   @Test
+ /**  @Test
     public void test30SearchWithCustomerNameStartDateTimeMeridianEndDateTimeMeridian() {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME,"-port", PORT,"-search","devyani","12/12/2001","12:12","AM","12/12/2001","12:15","AM");
         assertThat(result.getTextWrittenToStandardOut(), result.getExitCode(), equalTo(0));
         String out = result.getTextWrittenToStandardOut();
         assertThat(out, out, containsString(""));
     }
-
+*/
     @Test
     public void test31OnlyReadMeWorks() {
         MainMethodResult result = invokeMain( Project4.class,  "-README");

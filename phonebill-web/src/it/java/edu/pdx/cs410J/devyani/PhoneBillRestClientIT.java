@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Integration test that tests the REST calls made by {@link PhoneBillRestClient}
  */
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PhoneBillRestClientIT {
   private static final String HOSTNAME = "localhost";
   private static final String PORT = System.getProperty("http.port", "8080");

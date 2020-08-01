@@ -61,6 +61,7 @@ public class PhoneBillServlet extends HttpServlet
         String start = getParameter(START_DATE_PARAMETER, request);
         String end = getParameter(END_DATE_PARAMETER, request);
 
+
        if (customer == null) {
            missingRequiredParameter(response, CUSTOMER_PARAMETER);
            return;
