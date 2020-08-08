@@ -1,8 +1,9 @@
 package edu.pdx.cs410J.devyani;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import edu.pdx.cs410J.UncaughtExceptionInMain;
+//import edu.pdx.cs410J.UncaughtExceptionInMain;
 //import edu.pdx.cs410J.devyani.PhoneBillRestClient.PhoneBillRestException;
+import edu.pdx.cs410J.UncaughtExceptionInMain;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -29,7 +30,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 */
     @Test
-    public void test0NoCommandLineArguments() {
+    public void test0NoCommandLineArguments()  {
         MainMethodResult result = invokeMain( Project4.class );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString(Project4.MISSING_ARGS));
@@ -37,7 +38,7 @@ public class Project4IT extends InvokeMainTestCase {
 
 
    @Test
-    public void test2EmptyServer() {
+    public void test2EmptyServer() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         //String out = result.getTextWrittenToStandardOut();
@@ -80,7 +81,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test4AddPhoneBillWithouthostvariable() {
+    public void test4AddPhoneBillWithouthostvariable() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  HOSTNAME,"-port", PORT,"devyani","111-111-1111","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -88,7 +89,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test4AddPhoneBillWithoutportvariable() {
+    public void test4AddPhoneBillWithoutportvariable() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-111-1111","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -96,7 +97,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test5AddPhoneBillWithoutcustomerName() {
+    public void test5AddPhoneBillWithoutcustomerName() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"111-111-1111","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -104,7 +105,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test6AddPhoneBillWithoutcallerNumber() {
+    public void test6AddPhoneBillWithoutcallerNumber() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -112,7 +113,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test7AddPhoneBillWithoutcalleeNumber() {
+    public void test7AddPhoneBillWithoutcalleeNumber() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","12/12/2001","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -120,7 +121,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test8AddPhoneBillWithoutstartDate() {
+    public void test8AddPhoneBillWithoutstartDate() throws UncaughtExceptionInMain{
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12:12","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -128,7 +129,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test9AddPhoneBillWithoutstartTime() {
+    public void test9AddPhoneBillWithoutstartTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12/12/2001","AM","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -136,7 +137,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test10AddPhoneBillWithoutstartMeridian() {
+    public void test10AddPhoneBillWithoutstartMeridian() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12/12/2001","12:12","12/12/2001","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -144,7 +145,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test11AddPhoneBillWithoutEndDate() {
+    public void test11AddPhoneBillWithoutEndDate() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12/12/2001","12:12","AM","12:15","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -152,7 +153,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test12AddPhoneBillWithoutEndTime() {
+    public void test12AddPhoneBillWithoutEndTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12/12/2001","12:12","AM","12/12/2001","AM"  );
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -160,7 +161,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test13AddPhoneBillWithoutEndMeridian() {
+    public void test13AddPhoneBillWithoutEndMeridian() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2222","12/12/2001","12:12","AM","12/12/2001","12:12");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -168,7 +169,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test14AddPhoneBillWithWrongFormatCallerNumber() {
+    public void test14AddPhoneBillWithWrongFormatCallerNumber() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-22xx","222-222-2222","12/12/2001","12:12","AM","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -176,7 +177,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test15AddPhoneBillWithWrongFormatCalleeNumber() {
+    public void test15AddPhoneBillWithWrongFormatCalleeNumber() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-22","12/12/2001","12:12","AM","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -184,7 +185,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test16AddPhoneBillWithWrongFormatStartDate() {
+    public void test16AddPhoneBillWithWrongFormatStartDate() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12mm","12:12","AM","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -192,7 +193,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test17AddPhoneBillWithWrongFormatStartTime() {
+    public void test17AddPhoneBillWithWrongFormatStartTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12/2001","12:nn","AM","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -200,7 +201,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test18AddPhoneBillWithWrongFormatStartMeridian() {
+    public void test18AddPhoneBillWithWrongFormatStartMeridian() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12/2001","12:12","abcd","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -208,7 +209,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test19AddPhoneBillWithWrongFormatEndDate() {
+    public void test19AddPhoneBillWithWrongFormatEndDate() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12/2001","12:12","AM","12/12/20mm","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -216,7 +217,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test20AddPhoneBillWithWrongFormatEndTime() {
+    public void test20AddPhoneBillWithWrongFormatEndTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12/2001","12:12","AM","12/12/2001","12:","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -224,7 +225,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test21AddPhoneBillWithWrongFormatEndMeridian() {
+    public void test21AddPhoneBillWithWrongFormatEndMeridian() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"devyani","111-222-2222","222-222-2211","12/12/2001","12:12","AM","12/12/2001","12:15","abcd");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -232,7 +233,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test22SearchWithoutCustomerName() {
+    public void test22SearchWithoutCustomerName() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -240,7 +241,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test23SearchWithoutStartDateTime() {
+    public void test23SearchWithoutStartDateTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -248,7 +249,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test24SearchWithoutEndDateTime() {
+    public void test24SearchWithoutEndDateTime() throws UncaughtExceptionInMain{
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -256,7 +257,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test25SearchWithCustomerNameAndStartDate() {
+    public void test25SearchWithCustomerNameAndStartDate() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -264,7 +265,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test26SearchWithCustomerNameAndStartDateTime() {
+    public void test26SearchWithCustomerNameAndStartDateTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001","12:12");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -272,7 +273,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test27SearchWithCustomerNameAndStartDateTimeMeridian() {
+    public void test27SearchWithCustomerNameAndStartDateTimeMeridian() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001","12:12","AM");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -280,7 +281,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test28SearchWithCustomerNameStartDateTimeMeridianEndDate() {
+    public void test28SearchWithCustomerNameStartDateTimeMeridianEndDate() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001","12:12","AM","12/12/2001");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -288,7 +289,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test29SearchWithCustomerNameStartDateTimeMeridianEndDateTime() {
+    public void test29SearchWithCustomerNameStartDateTimeMeridianEndDateTime() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME, PORT,"-search","devyani","12/12/2001","12:12","AM","12/12/2001","12:15");
         assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardError();
@@ -336,7 +337,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test35WithPrintAndlessArguments() {
+    public void test35WithPrintAndlessArguments() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME,"-port", PORT,"-print","devyani","111-222-2222","222-222-2211","12/12/2001","12:12","AM","12/12/2001","12:15");
         assertThat(result.getTextWrittenToStandardOut(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardOut();
@@ -344,7 +345,7 @@ public class Project4IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void test36WithPrintAndMoreArguments() {
+    public void test36WithPrintAndMoreArguments() throws UncaughtExceptionInMain {
         MainMethodResult result = invokeMain( Project4.class,  "-host",HOSTNAME,"-port", PORT,"-print","devyani","111-222-2222","222-222-2211","12/12/2001","12:12","AM","12/12/2001","12:15","AM","abcd");
         assertThat(result.getTextWrittenToStandardOut(), result.getExitCode(), equalTo(1));
         String out = result.getTextWrittenToStandardOut();

@@ -147,10 +147,10 @@ public class PhoneBillServlet extends HttpServlet
         if (bill == null) {
             bill = new PhoneBill(customer);
         }
-        else if (!bill.getCustomer().equals(customer)) {
+       /** else if (!bill.getCustomer().equals(customer)) {
             CustomerNameNotMatch(customer, response);
             return;
-        }
+        }*/
 
         //bill = new PhoneBill(customer);
         PhoneCall call = new PhoneCall(caller, callee, startDate, endDate);
@@ -216,7 +216,7 @@ public class PhoneBillServlet extends HttpServlet
         pw.println(Messages.getMappingCount(value != null ? value.size() : 0));
 
         for (PhoneCall call : value) {
-            System.out.println(call);
+            //System.out.println(call);
             pw.println(Messages.printPrettyPhoneCall(call));
         }
 
