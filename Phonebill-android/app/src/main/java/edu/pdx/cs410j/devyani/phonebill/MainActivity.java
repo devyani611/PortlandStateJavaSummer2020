@@ -27,10 +27,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this, ReadMeActivity.class);
-                startActivity(intent);
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                       .setAction("Action", null).show();
             }
         });
     }
@@ -57,7 +55,30 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchReadMeView(View view){
+    /**
+     * View to add phone calls to a phonebill
+     * @param view
+     */
+    public void AddPhoneCallView(View view){
+        Intent intent = new Intent(this, AddPhoneCallActivity.class);
+        startActivity(intent);
+    }
+
+
+    /**
+     * View to search for phonecalls present in the phonebill
+     * @param view
+     */
+    public void SearchPhoneCallsView(View view){
+        Intent intent = new Intent(this, SearchPhoneCallsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * View to launch readme for the user
+     * @param view
+     */
+    public void ReadMeView(View view){
         Intent intent = new Intent(this, ReadMeActivity.class);
         startActivity(intent);
     }
