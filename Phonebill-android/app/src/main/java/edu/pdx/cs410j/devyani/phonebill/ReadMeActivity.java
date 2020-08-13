@@ -12,7 +12,7 @@ public class ReadMeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_me);
 
-        TextView textview = (TextView) findViewById(R.id.textView);
+        TextView textview = findViewById(R.id.textView);
         textview.setText("This is project5: Designing an Android phoneBill application \n\n" +
                 "The project is designed by Devyani Shrivastava at Portland State University \n\n" +
                 "You can do different activities: Creating a phonebill, add a phonecall to the phonebill, pretty print the phone calls details. \n\n"+
