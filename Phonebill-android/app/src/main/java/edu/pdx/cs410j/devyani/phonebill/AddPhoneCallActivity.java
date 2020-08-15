@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AddPhoneCallActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class AddPhoneCallActivity extends AppCompatActivity {
      * Get user input for adding a phone call to phone bill
      * @param view
      */
-    public void GetCallData(View view) {
+    public void GetCallData(View view) throws ParseException {
         EditText editText = findViewById(R.id.customer_name);
         String customer = editText.getText().toString();
         editText = findViewById(R.id.caller_number);
@@ -73,37 +74,48 @@ public class AddPhoneCallActivity extends AppCompatActivity {
             return;
         }
 
+       // System.out.println(customer);
+        //System.out.println(startDateTime);
+        //System.out.println(endDateTime);
+
         // create a phone bill and add the phone call to it.
         PhoneBill bill = new PhoneBill(customer);
-        ArrayList<PhoneCall> phoneCalls = new ArrayList<PhoneCall>();
-        PhoneCall call = new PhoneCall(callerNumber, calleeNumber, startDateTime, endDateTime);
+        PhoneCall call = null;
+        List<PhoneCall> phoneCallList = new ArrayList<PhoneCall>();
+        call = new PhoneCall(callerNumber, calleeNumber, startDateTime, endDateTime);
+        //System.out.println("first call object "+ call);
+
+        //Snackbar mySnackbar = Snackbar.make(view, "Added "+ call.toString() ,5000);
+       // mySnackbar.show();
+
         // add the call to the arrayList
-        phoneCalls.add(call);
-        bill.setPhonecalls(phoneCalls);
+        phoneCallList.add(call);
+        bill.setPhonecalls((ArrayList<PhoneCall>) phoneCallList);
 
         //check if the file with this customer name exists, if yes then add file data to above phonebill object
         File file = new File(getFilesDir(), customer);
+        String line;
+        BufferedReader br;
+
 
         try {
             if (file.exists() == false) {
                 file.createNewFile();
-                //Log.e("AddPhonecall", "New file created.");
+                Log.e("AddPhonecall", "New file created.");
                 showPopUpMessage(view, "New file created successfully..!!");
                 TextDumper dumper = new TextDumper(file);
                 dumper.dump(bill);
             }
             else {
-                String line;
-                BufferedReader br;
 
                 br = new BufferedReader(new FileReader(file));
                 while ((line = br.readLine()) != null) {
-                    System.out.println(line);
+                    //System.out.println("reading by bufferreader " +line);
                     String[] args = line.split(";");
 
                     if (args[0] == null || args[0].trim().equals("")) {
-                       // Log.e("AddPhonecall", "New file created.");
-                        showPopUpMessage(view, "New file created successfully..!!");
+                       Log.e("AddPhonecall", "New file created.");
+                        //showPopUpMessage(view, "New file created successfully..!!");
                         TextDumper dumper = new TextDumper(file);
                         dumper.dump(bill);
                         return;
@@ -130,10 +142,10 @@ public class AddPhoneCallActivity extends AppCompatActivity {
                     String start = args[3]+" "+args[4]+" "+args[5];
                     String end = args[6]+" "+args[7]+" "+args[8];
 
-                    call = new PhoneCall(caller, callee, start, end);
+                    PhoneCall pc = new PhoneCall(caller, callee, start, end);
 
                     //add the phonecall to the bill
-                    bill.addPhoneCall(call);
+                    bill.addPhoneCall(pc);
                 }
 
                 br.close();
@@ -170,21 +182,36 @@ public class AddPhoneCallActivity extends AppCompatActivity {
      * @param DateTime start or end datetime
      * @return true/false based on the provided input
      */
-    public static boolean isValidDateTime(String DateTime) {
-        DateTime = DateTime.replace("pm", "PM").replace("am", "AM");
-        String date = null;
-        /* Create Date object
-         * parse the string into date
-         */
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-            Date depdate = sdf.parse(DateTime);
-            date = sdf.format(depdate);
+    public static boolean isValidDateTime(String DateTime) throws ParseException {
+        // null and empty check
+        if (DateTime == null || DateTime.isEmpty())
+            return false;
 
-        } catch (ParseException e) {
-            System.err.println("Please enter the date and time in the given format: mm/dd/yyyy HH:mm a");
-           return false;
+        String[] depart = DateTime.split(" ");
+
+        // length check
+        if (depart.length != 3)
+            return false;
+
+        String Date = depart[0];
+        String Time = depart[1];
+        String Meridian = depart[2];
+
+        // check if date is valid
+        if (!Date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+            return false;
         }
+
+        // check if time is valid
+        if (!Time.matches("\\d{1,2}:\\d{1,2}")) {
+            return false;
+        }
+
+        // check if am or pm is mentioned correctly in depart
+        if (!(Meridian.equalsIgnoreCase("am") || Meridian.equalsIgnoreCase("pm"))) {
+            return false;
+        }
+
         return true;
     }
 

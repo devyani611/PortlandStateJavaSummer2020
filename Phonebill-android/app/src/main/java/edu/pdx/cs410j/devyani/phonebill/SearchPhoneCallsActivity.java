@@ -13,6 +13,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class SearchPhoneCallsActivity extends AppCompatActivity {
@@ -27,7 +30,7 @@ public class SearchPhoneCallsActivity extends AppCompatActivity {
      * Method which gets user input and validates
      * @param view
      */
-    public void searchPhoneCalls(View view){
+    public void searchPhoneCalls(View view) throws ParseException {
         EditText editText = findViewById(R.id.customer_name);
         String customer = editText.getText().toString();
         editText = findViewById(R.id.start);
@@ -82,12 +85,16 @@ public class SearchPhoneCallsActivity extends AppCompatActivity {
                     return;
                 }
 
-                //System.out.println(startDateTime);
-                //System.out.println(endDateTime);
-
-                //System.out.println("read from file" +args[3] + " "+ args[4]+ " "+ args[5]);
                 String callstart = args[3] + " "+ args[4]+ " "+ args[5];
-                if (args[0].equalsIgnoreCase(customer) && (callstart.compareTo(startDateTime) >= 0 && callstart.compareTo(endDateTime) <= 0)) {
+                //System.out.println(callstart);
+
+                SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy h:mm a");
+
+                Date date1 = format.parse(callstart);
+                Date date2 = format.parse(startDateTime);
+                Date date3 = format.parse(endDateTime);
+
+                if (args[0].equalsIgnoreCase(customer) && (date1.compareTo(date2) >= 0 && (date1.compareTo(date3) <= 0))) {
                     // Create a phonebill object of the matched arguments
                     String caller = args[1];
                     String callee = args[2];
@@ -95,6 +102,7 @@ public class SearchPhoneCallsActivity extends AppCompatActivity {
                     String end = args[6] + " " + args[7] + " " + args[8];
 
                     PhoneCall pc = new PhoneCall(caller, callee, start,end);
+
                     pb.addPhoneCall(pc);
                 }
             }

@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,9 +30,11 @@ public class TextDumper {
             BufferedWriter bw = new BufferedWriter(writer);
             // first empty the file
             bw.write("");
-            List<PhoneCall> calls = pb.getPhoneCalls();
+            ArrayList<PhoneCall> calls = pb.getPhoneCalls();
             Collections.sort(calls);
+            //System.out.println("in text dumper "+ calls);
             for(int i = 0; i < calls.size(); i++) {
+                //System.out.println(pb.getCustomer()+";"+(pb).getPhoneCalls().get(i).getCallDetails());
                 bw.append(pb.getCustomer()+";"+(pb).getPhoneCalls().get(i).getCallDetails());
                 if(i < pb.getPhoneCalls().size()-1)
                     bw.newLine();

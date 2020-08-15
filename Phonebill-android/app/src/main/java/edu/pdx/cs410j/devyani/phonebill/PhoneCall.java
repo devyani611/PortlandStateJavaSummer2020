@@ -37,7 +37,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public Date getStartTime() {
-        DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         /* Create Date object
          * parse the string into date */
         Date startDateTime = null;
@@ -59,7 +59,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public Date getEndTime(){
-        DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        DateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         /* Create Date object
          * parse the string into date
          */
@@ -82,7 +82,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public String getStartTimeString() {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         Date date = getStartTime();
         start = df.format(date);
         return start;
@@ -94,7 +94,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
      */
     @Override
     public String getEndTimeString() {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         Date date = getEndTime();
         end = df.format(date);
         return end;
@@ -109,7 +109,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
         Date startdatetime = this.getStartTime();
         Date enddatetime = this.getEndTime();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm a");
         String[] startTimeString = sdf.format(startdatetime).split(" ");
         String[] endTimeString = sdf.format(enddatetime).split(" ");
 
@@ -117,16 +117,17 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
                 + startTimeString[2] + ";" + endTimeString[0] + ";" + endTimeString[1] + ";" + endTimeString[2];
     }
 
+
     /**
      * The method compares the two phonecalls on the basis of caller number and startdatetime
      * @param pc phonecall
      * @return compared value
-     */
+*/
     @Override
     public int compareTo(PhoneCall pc) {
         int value1 = this.getCaller().compareTo(pc.getCaller());
         if (value1 == 0) {
-            int value2 = pc.getStartTimeString().compareTo(this.getStartTimeString());
+            int value2 = pc.getStartTime().compareTo(this.getStartTime());
             return value2;
         }
         return value1;

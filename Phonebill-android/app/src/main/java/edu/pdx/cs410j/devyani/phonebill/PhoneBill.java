@@ -6,7 +6,7 @@ import java.util.Collections;
 import edu.pdx.cs410J.AbstractPhoneBill;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
-public class PhoneBill extends AbstractPhoneBill {
+public class PhoneBill extends AbstractPhoneBill{
 
     private String customer;
     public ArrayList<PhoneCall> phonecalls;
@@ -40,4 +40,7 @@ public class PhoneBill extends AbstractPhoneBill {
         Collections.sort(phonecalls);
         return phonecalls;
     }
+
+
+
 }
