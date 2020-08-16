@@ -74,10 +74,6 @@ public class AddPhoneCallActivity extends AppCompatActivity {
             return;
         }
 
-       // System.out.println(customer);
-        //System.out.println(startDateTime);
-        //System.out.println(endDateTime);
-
         // create a phone bill and add the phone call to it.
         PhoneBill bill = new PhoneBill(customer);
         PhoneCall call = null;
@@ -207,7 +203,7 @@ public class AddPhoneCallActivity extends AppCompatActivity {
             return false;
         }
 
-        // check if am or pm is mentioned correctly in depart
+        // check if am or pm is mentioned correctly
         if (!(Meridian.equalsIgnoreCase("am") || Meridian.equalsIgnoreCase("pm"))) {
             return false;
         }
